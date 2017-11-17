@@ -6,6 +6,10 @@ public class TCPClient1 {
 
 		String sentence;
 		String modifiedSentence;
+		int a=1;
+		int b=1;
+		int c=3;
+		String dadas;
 
 		BufferedReader inFromUser =
 				new BufferedReader(new InputStreamReader(System.in));

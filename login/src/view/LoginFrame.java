@@ -8,14 +8,15 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import controller.loginSerivce;
+import controller.loginService;
 
 public class LoginFrame extends JFrame implements ActionListener{
 
 	BufferedImage img =null;
 	JTextField loginTextField;
 	JPasswordField passwordField;
-	JButton bt;
+	JButton lgbt;
+	JButton sgbt;
 
 	//main
 	public static void main(String[] args ) {
@@ -66,14 +67,24 @@ public class LoginFrame extends JFrame implements ActionListener{
 		layeredPane.add(passwordField);//패널에 넣기
 		
 		//버튼추가
-		bt = new JButton(new ImageIcon("image/btLogin_hud.png"));// 버튼에 이미지 추가 
-		bt.setBounds(755,689,104,48);
-		bt.setBorderPainted(false);//투명하게하기
-		bt.setFocusPainted(false);//투명하게하기
-		bt.setContentAreaFilled(false);//투명하게하기
-		layeredPane.add(bt);//패널에 넣기 
+		lgbt = new JButton(new ImageIcon("image/btLogin_hud.png"));// 버튼에 이미지 추가 
+		lgbt.setBounds(755,589,104,48);
+		lgbt.setBorderPainted(false);//투명하게하기
+		lgbt.setFocusPainted(false);//투명하게하기
+		lgbt.setContentAreaFilled(false);//투명하게하기
+		layeredPane.add(lgbt);//패널에 넣기 
+		
+		//회원가입 버튼 추가ㅣ
+		sgbt = new JButton(new ImageIcon("image/signup_icon.jpg"));
+		sgbt.setBounds(735,689,184,35);
+		sgbt.setBorderPainted(false);
+		sgbt.setFocusPainted(false);
+		sgbt.setContentAreaFilled(false);
+		layeredPane.add(sgbt);
 		
 		//add
+		lgbt.addActionListener(this);
+		sgbt.addActionListener(this);
 		layeredPane.add(panel);
 		add(layeredPane);
 		setVisible(true);
@@ -84,9 +95,11 @@ public class LoginFrame extends JFrame implements ActionListener{
 		}
 	}
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+		if(e.getSource()==lgbt) {
+			
 		String id = loginTextField.getText();
 		char[] pass = passwordField.getPassword();
 		String pw = new String(pass);
@@ -96,13 +109,18 @@ public class LoginFrame extends JFrame implements ActionListener{
 			JOptionPane.showMessageDialog(null, "text field space!!");
 		}
 		else {
-			boolean islogin= loginSerivce.loginTest(id,pw);
+			boolean islogin= loginService.loginTest(id,pw);
 			if(islogin) {
 				JOptionPane.showMessageDialog(null, "login success!!");
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "login fail!!");
 			}
+		}
+		}
+		else {
+			//JOptionPane.showMessageDialog(null, "sign up");
+			new signupFrame();
 		}
 	}
 }

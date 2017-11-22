@@ -5,10 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Enumeration;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import view.LoginFrame.Mypanel;
+import controller.checkService;
+import controller.signupService;
+
 
 public class signupFrame extends JFrame  implements ActionListener{
 
@@ -25,6 +29,8 @@ public class signupFrame extends JFrame  implements ActionListener{
 	JRadioButton rdbt1,rdbt2;
 	JButton Ybt;
 	JButton Nbt;
+	JButton checkDuplicate;
+	ButtonGroup genderButton = new ButtonGroup();
 
 
 	public signupFrame() {
@@ -49,73 +55,73 @@ public class signupFrame extends JFrame  implements ActionListener{
 		Mypanel panel  = new Mypanel();
 		panel.setBounds(0,0,750,1334);
 		//아이디
-		IDTextField = new JTextField("ID");
+		IDTextField = new JTextField("Pig");
 		IDTextField.setBounds(100,100,280,30); //로그인 텍스트 필드 위치 
 		IDTextField.setOpaque(false); // 투명하게 하기 
-		IDTextField.setForeground(Color.green);
+		IDTextField.setForeground(Color.BLACK);
 		IDTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
 		layeredPane.add(IDTextField); // 패널에 놓기 
 
 		//비밀번호
-		passwordField = new JPasswordField("password"); 
+		passwordField = new JPasswordField("0000"); 
 		passwordField.setBounds(100,150,280,30); //패스워드 텍스트 필드 위치 
 		passwordField.setOpaque(false);//투명하게하기 
-		passwordField.setForeground(Color.green);
+		passwordField.setForeground(Color.BLACK);
 		passwordField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게하기 
 		layeredPane.add(passwordField);
 		//비밀번호확인
-		passwordConfirmField = new JPasswordField("password confirm"); 
+		passwordConfirmField = new JPasswordField("0000"); 
 		passwordConfirmField.setBounds(100,200,280,30); //패스워드 텍스트 필드 위치 
 		passwordConfirmField.setOpaque(false);//투명하게하기 
-		passwordConfirmField.setForeground(Color.green);
+		passwordConfirmField.setForeground(Color.BLACK);
 		passwordConfirmField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게하기 
 		layeredPane.add(passwordConfirmField);
 		//이름
-		NameTextField = new JTextField("Name");
+		NameTextField = new JTextField("유준");
 		NameTextField.setBounds(100,250,280,30); //로그인 텍스트 필드 위치 
 		NameTextField.setOpaque(false); // 투명하게 하기 
-		NameTextField.setForeground(Color.green);
+		NameTextField.setForeground(Color.BLACK);
 		NameTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
 		layeredPane.add(NameTextField);
 		//나이
-		AgeTextField = new JTextField("Age");
+		AgeTextField = new JTextField("45");
 		AgeTextField.setBounds(100,300,280,30); //로그인 텍스트 필드 위치 
 		AgeTextField.setOpaque(false); // 투명하게 하기 
-		AgeTextField.setForeground(Color.green);
+		AgeTextField.setForeground(Color.BLACK);
 		AgeTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
 		layeredPane.add(AgeTextField);
 		//성
 		rdbt1=new JRadioButton("F");
 		rdbt2= new JRadioButton("M");
-		ButtonGroup genderButton = new ButtonGroup();
+		//버튼 그룹화 
+		
 		genderButton.add(rdbt1);
 		genderButton.add(rdbt2);
 		rdbt1.setBounds(100, 350, 31, 31);
 		rdbt2.setBounds(133, 350, 35,31);
-		//두개다 체크안되게하기 
 		layeredPane.add(rdbt1);
 		layeredPane.add(rdbt2);
 
 
 		//키
-		HeightTextField = new JTextField("Height");
+		HeightTextField = new JTextField("175.2");
 		HeightTextField.setBounds(100,400,280,30); //로그인 텍스트 필드 위치 
 		HeightTextField.setOpaque(false); // 투명하게 하기 
-		HeightTextField.setForeground(Color.green);
+		HeightTextField.setForeground(Color.BLACK);
 		HeightTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
 		layeredPane.add(HeightTextField);
 		//몸무게
-		WeightTextField = new JTextField("Weight");
+		WeightTextField = new JTextField("125.3");
 		WeightTextField.setBounds(100,450,280,30); //로그인 텍스트 필드 위치 
 		WeightTextField.setOpaque(false); // 투명하게 하기 
-		WeightTextField.setForeground(Color.green);
+		WeightTextField.setForeground(Color.BLACK);
 		WeightTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
 		layeredPane.add(WeightTextField);
 		//목표
-		GoalTextField = new JTextField("Goal");
+		GoalTextField = new JTextField("100.3");
 		GoalTextField.setBounds(100,500,280,30); //로그인 텍스트 필드 위치 
 		GoalTextField.setOpaque(false); // 투명하게 하기 
-		GoalTextField.setForeground(Color.green);
+		GoalTextField.setForeground(Color.BLACK);
 		GoalTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
 		layeredPane.add(GoalTextField);
 
@@ -134,6 +140,12 @@ public class signupFrame extends JFrame  implements ActionListener{
 		Nbt.setFocusPainted(false);//투명하게하기
 		Nbt.setContentAreaFilled(false);//투명하게하기
 		layeredPane.add(Nbt);//패널에 넣기 
+		
+		//중복확인
+		checkDuplicate = new JButton("중복확인");
+		checkDuplicate.setBounds(400,100,90,30);
+		layeredPane.add(checkDuplicate);
+		
 
 		Nbt.addActionListener(this);
 		Ybt.addActionListener(this);
@@ -152,13 +164,95 @@ public class signupFrame extends JFrame  implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+		String id = IDTextField.getText();
+		System.out.println(id);
+
 		if(e.getSource()==Ybt) {
-			JOptionPane.showMessageDialog(null, "sign up success!!");
+				
+			String temp_age = AgeTextField.getText();
+			int age = Integer.parseInt(temp_age);
+
+			String name = NameTextField.getText();
+
+			String temp_height= HeightTextField.getText();
+			float height=Float.parseFloat(temp_height);
+
+			String temp_weight= WeightTextField.getText();
+			float weight = Float.parseFloat(temp_weight);
+
+			String temp_goal = GoalTextField.getText();
+			float goal = Float.parseFloat(temp_goal);
+
+			char[] pass = passwordField.getPassword();
+			String pw = new String(pass);
+
+			char[] passconfirm = passwordConfirmField.getPassword();
+			String pwconf=new String(passconfirm);
+			
+			Enumeration<AbstractButton> enums= genderButton.getElements();
+			String gender=null;
+			while(enums.hasMoreElements()){
+				AbstractButton ab = enums.nextElement();
+				JRadioButton jb =(JRadioButton)ab;
+				
+				if(jb.isSelected())
+					gender=jb.getText().trim();
+					
+			}
+			
+			if(id.equals("")){
+				JOptionPane.showMessageDialog(null, "ID field EMPTY!!");
+			}
+			else if(temp_age.equals("")){
+				JOptionPane.showMessageDialog(null, "AGE field EMPTY!!");
+			}
+			else if(name.equals("")){
+				JOptionPane.showMessageDialog(null, "NAME field EMPTY!!");
+			}
+			else if(temp_height.equals("")){
+				JOptionPane.showMessageDialog(null, "HEIGHT field EMPTY!!");
+			}
+			else if(temp_weight.equals("")){
+				JOptionPane.showMessageDialog(null, "WEIGHT field EMPTY!!");
+			}
+			else if(temp_goal.equals("")){
+				JOptionPane.showMessageDialog(null, "Goal field EMPTY!!");
+			}
+			else if(pw.equals("")){
+				JOptionPane.showMessageDialog(null, "PASSWORD field EMPTY!!");
+			}
+			else if(pwconf.equals("")){
+				JOptionPane.showMessageDialog(null, "PASSWORDCONFIRM field EMPTY!!");
+			}
+			else if (pw.equals(pwconf)==false){
+				JOptionPane.showMessageDialog(null, "PASSWORDCONFIRM field and PASSWORD field differ!!");
+			}
+			else{
+				boolean success=signupService.signUp(id,pw,name,age,gender,height,weight,goal);
+				
+				if(success==true){
+					dispose();
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Some field EMPTY!!");
+				}
+			}
+
+		}
+		else if(e.getSource()==Nbt) {
 			dispose();
 		}
-		else {
-			JOptionPane.showMessageDialog(null, "sign up fail!!");
-			dispose();
+		
+		else if(e.getSource()==checkDuplicate){
+			
+			boolean check = checkService.check(id);
+		
+			if(check==true){
+				JOptionPane.showMessageDialog(null, "Already taken ID!!");
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Available ID!!");
+			}
 		}
 
 	}

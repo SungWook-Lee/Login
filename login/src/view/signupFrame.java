@@ -166,39 +166,38 @@ public class signupFrame extends JFrame  implements ActionListener{
 		
 		String id = IDTextField.getText();
 		System.out.println(id);
+		String temp_age = AgeTextField.getText();
+		int age = Integer.parseInt(temp_age);
+
+		String name = NameTextField.getText();
+
+		String temp_height= HeightTextField.getText();
+		float height=Float.parseFloat(temp_height);
+
+		String temp_weight= WeightTextField.getText();
+		float weight = Float.parseFloat(temp_weight);
+
+		String temp_goal = GoalTextField.getText();
+		float goal = Float.parseFloat(temp_goal);
+
+		char[] pass = passwordField.getPassword();
+		String pw = new String(pass);
+
+		char[] passconfirm = passwordConfirmField.getPassword();
+		String pwconf=new String(passconfirm);
+		
+		Enumeration<AbstractButton> enums= genderButton.getElements();
+		String gender=null;
+		while(enums.hasMoreElements()){
+			AbstractButton ab = enums.nextElement();
+			JRadioButton jb =(JRadioButton)ab;
+			
+			if(jb.isSelected())
+				gender=jb.getText().trim();
+				
+		}
 
 		if(e.getSource()==Ybt) {
-				
-			String temp_age = AgeTextField.getText();
-			int age = Integer.parseInt(temp_age);
-
-			String name = NameTextField.getText();
-
-			String temp_height= HeightTextField.getText();
-			float height=Float.parseFloat(temp_height);
-
-			String temp_weight= WeightTextField.getText();
-			float weight = Float.parseFloat(temp_weight);
-
-			String temp_goal = GoalTextField.getText();
-			float goal = Float.parseFloat(temp_goal);
-
-			char[] pass = passwordField.getPassword();
-			String pw = new String(pass);
-
-			char[] passconfirm = passwordConfirmField.getPassword();
-			String pwconf=new String(passconfirm);
-			
-			Enumeration<AbstractButton> enums= genderButton.getElements();
-			String gender=null;
-			while(enums.hasMoreElements()){
-				AbstractButton ab = enums.nextElement();
-				JRadioButton jb =(JRadioButton)ab;
-				
-				if(jb.isSelected())
-					gender=jb.getText().trim();
-					
-			}
 			
 			if(id.equals("")){
 				JOptionPane.showMessageDialog(null, "ID field EMPTY!!");

@@ -97,10 +97,9 @@ public class LoginFrame extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
+		String id = loginTextField.getText();
 		if(e.getSource()==lgbt) {
 
-			String id = loginTextField.getText();
 			char[] pass = passwordField.getPassword();
 			String pw = new String(pass);
 
@@ -112,6 +111,8 @@ public class LoginFrame extends JFrame implements ActionListener{
 				boolean islogin= loginService.loginTest(id,pw);
 				if(islogin) {
 					JOptionPane.showMessageDialog(null, "login success!!");
+					new MainFrame(id);
+					dispose();
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "login fail!!");
@@ -119,7 +120,6 @@ public class LoginFrame extends JFrame implements ActionListener{
 			}
 		}
 		else {
-			//JOptionPane.showMessageDialog(null, "sign up");
 			new signupFrame();
 		}
 	}

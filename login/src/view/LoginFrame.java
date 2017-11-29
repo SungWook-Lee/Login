@@ -26,6 +26,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 	//생성자
 	public LoginFrame() {
 
+		//프레임 초기화 
 		setTitle("Kill a Gram");// 실행창 이름 
 		setSize(1600,900);// 실행창 크기 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료하고 자원 반환
@@ -89,6 +90,8 @@ public class LoginFrame extends JFrame implements ActionListener{
 		add(layeredPane);
 		setVisible(true);
 	}
+	
+	
 	class Mypanel extends JPanel{
 		public void paint(Graphics g) {
 			g.drawImage(img,0,0,null);

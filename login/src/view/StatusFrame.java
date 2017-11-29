@@ -1,134 +1,87 @@
 package view;
-import view.MainFrame;
 
 import java.awt.Color;
-import java.sql.*;
 
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
-public class StatusFrame extends JFrame{
-
-	JTextField IDTextField;
-	JTextField AgeTextField;
-	JTextField NameTextField;
-	JTextField HeightTextField;
-	JTextField WeightTextField;
-	JTextField GoalTextField;
-	JPanel panel;
+public class StatusFrame extends JPanel {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-new StatusFrame("tester");
+		new StatusFrame("tester","이성욱","23","M","180.3","70.0","80.0");
 	}
-	public StatusFrame(String id){
+	public StatusFrame(String id,String name, String age, String gender,String height, String weight,String goal){
 
-		String driverName="com.mysql.jdbc.Driver";
-		String dbURL="jdbc:mysql://localhost:3306/user";
+		
+		JTextField IDField = new JTextField(id);
+		JTextField NameField = new JTextField(name);
+		JTextField AgeField = new JTextField(age);
+		JTextField GenderField = new JTextField(gender);
+		JTextField HeightField = new JTextField(height);
+		JTextField WeightField = new JTextField(weight);
+		JTextField GoalField = new JTextField(goal);
 
-		Connection con=null;
-		PreparedStatement pstmt =null;
-		ResultSet rs =null;
-		String sql=null;
-		String getPass =null;
+		this.setLayout(null);
+		this.setSize(1300,700);
+		this.setVisible(true);
 
-		try{
-			Class.forName(driverName);
-			con=DriverManager.getConnection(dbURL,"root","12345");
-			sql="select * from staus where id=?"; 
-			pstmt = con.prepareStatement(sql);
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setBounds(0,0,1300,700);
+		layeredPane.setLayout(null);
 
-			rs = pstmt.executeQuery();
-			pstmt.setString(1, id);
+		//아이디
+		IDField.setBounds(100,200,280,30); //로그인 텍스트 필드 위치 
+		IDField.setOpaque(false); // 투명하게 하기 
+		IDField.setForeground(Color.BLACK);
+		IDField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
+		layeredPane.add(IDField); // 패널에 놓기 
 
-			while(rs.next()){
-				String ID = rs.getString("ID");
-				String Name = rs.getString("Name");
-				int temp_age = rs.getInt("Age");
-				String Age = String.valueOf(temp_age);
-				String gender = rs.getString("Gender");
-				float temp_Height = rs.getFloat("Height");
-				String Height = String.valueOf(temp_Height);
-				float temp_Weight = rs.getFloat("Weight");
-				String Weight =String.valueOf(temp_Weight);
-				float temp_Goal = rs.getFloat("Goal");
-				String Gaol = String.valueOf(temp_Goal);
-			}
-			
+		//이름
+		NameField.setBounds(100,250,280,30); //로그인 텍스트 필드 위치 
+		NameField.setOpaque(false); // 투명하게 하기 
+		NameField.setForeground(Color.BLACK);
+		NameField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
+		layeredPane.add(NameField);
+		
+		GenderField.setBounds(100,300,280,30);
+		GenderField.setOpaque(false);
+		GenderField.setForeground(Color.BLACK);
+		GenderField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
+		layeredPane.add(GenderField);
 
-			IDTextField = new JTextField("ID");
-			NameTextField = new JTextField("Name");
-			AgeTextField = new JTextField("Age");
-			HeightTextField = new JTextField("Height");
-			WeightTextField = new JTextField("Weight");
-			GoalTextField= new JTextField("Goal");
+		//나이
+		AgeField.setBounds(100,350,280,30); //로그인 텍스트 필드 위치 
+		AgeField.setOpaque(false); // 투명하게 하기 
+		AgeField.setForeground(Color.BLACK);
+		AgeField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
+		layeredPane.add(AgeField);
 
-			setTitle("Kill a Gram");
-			setSize(1300,800);
-			setLayout(null);
-			panel = new JPanel();
-			JLayeredPane layeredPane = new JLayeredPane(); 
-			layeredPane.setBounds(0,0,800,1300);
-			layeredPane.setLayout(null);
-			layeredPane.add(panel);
-			
-			IDTextField.setBounds(100,100,280,30);
-			IDTextField.setOpaque(false); // 투명하게 하기 
-			IDTextField.setForeground(Color.BLACK);
-			IDTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
-			layeredPane.add(IDTextField);
-			
-			NameTextField.setBounds(100,150,280,30);
-			NameTextField.setOpaque(false); // 투명하게 하기 
-			NameTextField.setForeground(Color.BLACK);
-			NameTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
-			layeredPane.add(NameTextField);
+		//키
+		HeightField.setBounds(100,400,280,30); //로그인 텍스트 필드 위치 
+		HeightField.setOpaque(false); // 투명하게 하기 
+		HeightField.setForeground(Color.BLACK);
+		HeightField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
+		layeredPane.add(HeightField);
+		
+		//몸무게
+		WeightField.setBounds(100,450,280,30); //로그인 텍스트 필드 위치 
+		WeightField.setOpaque(false); // 투명하게 하기 
+		WeightField.setForeground(Color.BLACK);
+		WeightField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
+		layeredPane.add(WeightField);
+		
+		//목표
+		GoalField.setBounds(100,500,280,30); //로그인 텍스트 필드 위치 
+		GoalField.setOpaque(false); // 투명하게 하기 
+		GoalField.setForeground(Color.BLACK);
+		GoalField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
+		layeredPane.add(GoalField);
 
-			AgeTextField.setBounds(100,200,280,30);
-			AgeTextField.setOpaque(false); // 투명하게 하기 
-			AgeTextField.setForeground(Color.BLACK);
-			AgeTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
-			layeredPane.add(AgeTextField);
-			
-			HeightTextField.setBounds(100,250,280,30);
-			HeightTextField.setOpaque(false); // 투명하게 하기 
-			HeightTextField.setForeground(Color.BLACK);
-			HeightTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
-			layeredPane.add(HeightTextField);
-			
-			WeightTextField.setBounds(100,300,280,30);
-			WeightTextField.setOpaque(false); // 투명하게 하기 
-			WeightTextField.setForeground(Color.BLACK);
-			WeightTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
-			layeredPane.add(WeightTextField);
-			
-			GoalTextField.setBounds(100,350,280,30);
-			GoalTextField.setOpaque(false); // 투명하게 하기 
-			GoalTextField.setForeground(Color.BLACK);
-			GoalTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//투명하게 하기 
-			layeredPane.add(GoalTextField);
 
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(pstmt!=null)
-					pstmt.close();
-			} catch (SQLException s) {
-				// TODO Auto-generated catch block
-				s.printStackTrace();
-			}
-			try{
-				if(con!=null)
-					con.close();
-			}
-			catch(SQLException se){
-				se.printStackTrace();
-			}
-		}
+		this.add(layeredPane);
+		
+
+
 	}
 
 }

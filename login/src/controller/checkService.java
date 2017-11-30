@@ -35,7 +35,6 @@ public class checkService {
 
 			rs=pstmt.executeQuery();
 			
-			
 			while(rs.next()) {
 				getPass = rs.getString("ID");
 				

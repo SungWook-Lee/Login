@@ -110,6 +110,7 @@ public class Login extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null, "text field space!!");
 			}
 			else {
+				//Client.run(id,pw);
 				boolean islogin= loginService.loginTest(id,pw);
 				if(islogin) {
 					JOptionPane.showMessageDialog(null, "login success!!");

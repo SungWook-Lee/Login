@@ -1,114 +1,226 @@
 package Client;
 
+
+
 import java.io.BufferedReader;
+
 import java.io.IOException;
+
 import java.io.InputStreamReader;
+
 import java.io.PrintWriter;
+
 import java.net.InetAddress;
+
 import java.net.Socket;
 
+
+
 import javax.swing.JFrame;
+
 import javax.swing.JOptionPane;
 
+
+
 import view.Login;
+
 import view.Main;
+
+
 
 public class Client {
 
+
+
    BufferedReader in;
+
    PrintWriter out;   
+
    private static String ID="11";
+
    private static String PW="11";
+
    private boolean flag = true;
+
    JFrame frame =new JFrame("IP Address");
 
+
+
    public Client() {
+
       // TODO Auto-generated constructor stub
+
 	   
-   }
-   public static void setID(String id){
-      ID = id;
-      
-   }
-   public static void setPW(String pw){
-      PW = pw;
-   }
-   
-   private String getID(){
-      return this.ID;
-   }
-   private String getPW(){
-      return this.PW;
-   }
-   
-   private void getIslogin(boolean flag ){
-      this.flag= flag;
 
    }
-   public boolean setIslogin(){
-      return this.flag;
+
+   public static void setID(String id){
+
+      ID = id;
+
+      
+
    }
+
+   public static void setPW(String pw){
+
+      PW = pw;
+
+   }
+
+   
+
+   private String getID(){
+
+      return this.ID;
+
+   }
+
+   private String getPW(){
+
+      return this.PW;
+
+   }
+
+   
+
+   private void getIslogin(boolean flag ){
+
+      this.flag= flag;
+
+
+
+   }
+
+   public boolean setIslogin(){
+
+      return this.flag;
+
+   }
+
    private String getServerAddress() {
+
 		return JOptionPane.showInputDialog(frame,"Enter IP Address of the Server:","Welcome to the Chatter",JOptionPane.QUESTION_MESSAGE);
+
 	}
+
+
 
    public void run() throws IOException{
 
+
+
     //  InetAddress local = InetAddress.getLocalHost();
+
       String serverAddress = getServerAddress();
+
       Socket socket = new Socket(serverAddress, 1234);
+
       in= new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
       out = new PrintWriter(socket.getOutputStream(),true);
+
       String idpw= new String();
+
       
+
       
+
 //      while(idpw.equals("null,null")){
+
 //         
+
 //      }
 
+
+
       while(true){
+
          String line = in.readLine();
+
          Login login = null;
+
          
+
          if(line.startsWith("START")){
+
             out.println("SUCCESS");
+
             login=new Login();
-            System.out.println("·Î±×ÀÎÈ­¸é º¸¿©ÁÖ±â ¿Ï·á");
+
+            System.out.println("ë¡œê·¸ì¸í™”ë©´ ë³´ì—¬ì£¼ê¸° ì™„ë£Œ");
+
             
+
          }
+
          
+
          else if(line.startsWith("REQUEST")){
+
 //          while(Login.flag){
+
 //        	  System.out.println("????");
+
 //          }
-            System.out.println("¸®Äù½ºÆ® ¹ŞÀ½");
-            idpw=login.set();
-            System.out.println("¾ÆÀÌµğ ºñ¹Ğ¹øÈ£ ¼³Á¤");
+
+            System.out.println("ë¦¬í€˜ìŠ¤íŠ¸ ë°›ìŒ");
+
+
+            System.out.println("ì•„ì´ë”” ë¹„ë°€ë²ˆí˜¸ ì„¤ì •");
+
             out.println("IDADNPW"+idpw);
-            System.out.println("¾ÆÀÌµğ Àßº¸³¿");
+
+            System.out.println("ì•„ì´ë”” ì˜ë³´ëƒ„");
+
          }
+
          else if(line.startsWith("ACCESSED")){
-        	 System.out.println("°á°ú Àß¹ŞÀ½");
+
+        	 System.out.println("ê²°ê³¼ ì˜ë°›ìŒ");
+
             String temp = line.substring(8);
+
             if(temp.equals("true")){
+
                flag=true;
+
                if(flag) {
-            	   System.out.println("Á¦¹ßÁ» µÇ¶ó");
+
+            	   System.out.println("ì œë°œì¢€ ë˜ë¼");
+
                   new Main(ID);
+
                }
+
                else {
-                  System.out.println("¾ÈµÊ¤»");
+
+                  System.out.println("ì•ˆë¨ã…‹");
+
                }
+
             }
+
          }
+
          
+
+
 
       }
 
+
+
    }
+
    public static void main(String[] args) throws Exception{
+
       
+
       Client client = new Client();
+
       client.run();
+
    }
+
 }

@@ -8,7 +8,10 @@ import java.io.PrintWriter;
 import java.net.*;
 import java.util.HashSet;
 
+import controller.loadService;
 import controller.loginService;
+import view.Login;
+import view.Main;
 
 public class Server {
 
@@ -39,7 +42,8 @@ public class Server {
 		private BufferedReader in;
 		private PrintWriter out;
 		String p =",";
-		boolean flag=false;
+		boolean flag = false;
+		private String[] info = new String[2];
 
 		public Handler(Socket socket) {
 			this.socket = socket;
@@ -51,42 +55,53 @@ public class Server {
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				out = new PrintWriter(socket.getOutputStream(), true);
 
-
-				while (true) {
-
-					IDPW=in.readLine();
-					String[] info = IDPW.split(p);
-
-					if(info[0]==null||info[1]==null){
-						return;
-					}
-					else 
-					{
-						flag=loginService.loginTest(info[0], info[1]);
-						out.println("LOGINACCESS "+flag);					
-					}
-
-					out.println("MODIFY");
-					out.println("SIGNUP");
-					out.println("FOOD");
-					out.println("SPORT");
-					out.println("RANK");
+				while(true){
+					out.println("START");
+					String temp = in.readLine();
+					if(temp.startsWith("SUCCESS"))
+						break;
 				}
+//				while(Login.flag){
+//					System.out.println("로그인 버튼 안눌렀으니 아직 리퀘스트 보내면 안됨");
+//				}
+
+				out.println("REQUEST");
+				System.out.println("리퀘스트 보냄");
+				while(true){
+
+					String next = in.readLine();
+					System.out.println(next);
+
+					switch(next){
+					
+					case "IDANDPW":
+						System.out.println("아이디 잘받음");
+						String IDPW = next.substring(7);
+						info = IDPW.split(p);
+						if(info[0]!=null&&info[1]!=null){
+							flag = loginService.loginTest(info[0], info[1]);
+						}
+						out.println("ACCESSED"+flag);
+						System.out.println("확인하고 결과보냄");
+
+					case "MODIFY":
+						break;
+					}
 
 
-
-
-
+				}
 
 
 			} catch (IOException e) {
 				System.out.println(e);
 			} 
-			finally {
-
-				try {
+			finally 
+			{
+				try 
+				{
 					socket.close();
-				} catch (IOException e) {
+				} 
+				catch (IOException e) {
 
 				}
 			}

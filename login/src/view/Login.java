@@ -8,6 +8,7 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import Client.Client;
 import controller.loginService;
 
 public class Login extends JFrame implements ActionListener{
@@ -17,12 +18,10 @@ public class Login extends JFrame implements ActionListener{
 	JPasswordField passwordField;
 	JButton lgbt;
 	JButton sgbt;
-
+	String idpw;
+	String id,pw;
+	public static boolean flag=true;
 	//main
-	public static void main(String[] args ) {
-		new Login();
-	}
-
 	//생성자
 	public Login() {
 
@@ -39,13 +38,13 @@ public class Login extends JFrame implements ActionListener{
 		layeredPane.setLayout(null);
 
 
-		//이미지 받아오기
-		try {
-			img = ImageIO.read(new File("image/login.png")); //이미지 변경부분 
-		}catch(IOException e) {
-			System.out.println("Fail to load image");
-			System.exit(0);
-		}
+				//이미지 받아오기
+				try {
+					img = ImageIO.read(new File("image/login.png")); //이미지 변경부분 
+				}catch(IOException e) {
+					System.out.println("Fail to load image");
+					System.exit(0);
+				}
 
 		//패널
 		Mypanel panel  = new Mypanel();
@@ -90,7 +89,7 @@ public class Login extends JFrame implements ActionListener{
 		add(layeredPane);
 		setVisible(true);
 	}
-	
+
 	class Mypanel extends JPanel{
 		public void paint(Graphics g) {
 			g.drawImage(img,0,0,null);
@@ -100,30 +99,29 @@ public class Login extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String id = loginTextField.getText();
+		char[] pass = passwordField.getPassword();
+		String pw = new String(pass);
+		Client.setID(id);
+		Client.setPW(pw);		
+
 		if(e.getSource()==lgbt) {
-
-			char[] pass = passwordField.getPassword();
-			String pw = new String(pass);
-
 			if(id.equals("")|| pw.equals("")) {
 				//send message
 				JOptionPane.showMessageDialog(null, "text field space!!");
 			}
 			else {
-				//Client.run(id,pw);
-				boolean islogin= loginService.loginTest(id,pw);
-				if(islogin) {
-					JOptionPane.showMessageDialog(null, "login success!!");
-					new Main(id);
-					dispose();
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "login fail!!");
-				}
+				flag=true;
+				System.out.println("로그인 버튼 누름");
 			}
 		}
 		else {
 			new Signup();
 		}
+	}
+	
+	public String set() {
+		// TODO Auto-generated method stub
+		idpw=id+","+pw;
+		return idpw;
 	}
 }

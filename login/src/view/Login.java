@@ -10,7 +10,6 @@ import javax.swing.*;
 
 import Client.Client;
 import controller.loginService;
-
 public class Login extends JFrame implements ActionListener{
 
 	BufferedImage img =null;
@@ -20,61 +19,62 @@ public class Login extends JFrame implements ActionListener{
 	JButton sgbt;
 	String idpw;
 	String id,pw;
-	public static boolean flag=true;
+	public  boolean flag=true;
 	//main
-	//»ý¼ºÀÚ
+
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public Login() {
 
-		//ÇÁ·¹ÀÓ ÃÊ±âÈ­ 
-		setTitle("Kill a Gram");// ½ÇÇàÃ¢ ÀÌ¸§ 
-		setSize(1600,900);// ½ÇÇàÃ¢ Å©±â 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Á¾·áÇÏ°í ÀÚ¿ø ¹ÝÈ¯
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ 
+		setTitle("Kill a Gram");// ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½Ì¸ï¿½ 
+		setSize(1600,900);// ï¿½ï¿½ï¿½ï¿½Ã¢ Å©ï¿½ï¿½ 
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ú¿ï¿½ ï¿½ï¿½È¯
 
 
-		//·¹ÀÌ¾Æ¿ô ¼³Á¤
+		//ï¿½ï¿½ï¿½Ì¾Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 		setLayout(null);
 		JLayeredPane layeredPane = new JLayeredPane(); 
 		layeredPane.setBounds(0,0,1600,900);
 		layeredPane.setLayout(null);
 
 
-				//ÀÌ¹ÌÁö ¹Þ¾Æ¿À±â
-				try {
-					img = ImageIO.read(new File("image/login.png")); //ÀÌ¹ÌÁö º¯°æºÎºÐ 
-				}catch(IOException e) {
-					System.out.println("Fail to load image");
-					System.exit(0);
-				}
+//		//ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
+//		try {
+//			img = ImageIO.read(new File("image/login.png")); //ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Îºï¿½ 
+//		}catch(IOException e) {
+//			System.out.println("Fail to load image");
+//			System.exit(0);
+//		}
 
-		//ÆÐ³Î
+		//ï¿½Ð³ï¿½
 		Mypanel panel  = new Mypanel();
 		panel.setBounds(0,0,1600,900);
 
-		//·Î±×ÀÎ
+		//ï¿½Î±ï¿½ï¿½ï¿½
 		loginTextField = new JTextField(15);
-		loginTextField.setBounds(731,399,280,30); //·Î±×ÀÎ ÅØ½ºÆ® ÇÊµå À§Ä¡ 
-		loginTextField.setOpaque(false); // Åõ¸íÇÏ°Ô ÇÏ±â 
+		loginTextField.setBounds(731,399,280,30); //ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½Êµï¿½ ï¿½ï¿½Ä¡ 
+		loginTextField.setOpaque(false); // ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ï±ï¿½ 
 		loginTextField.setForeground(Color.green);
-		loginTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//Åõ¸íÇÏ°Ô ÇÏ±â 
-		layeredPane.add(loginTextField); // ÆÐ³Î¿¡ ³õ±â 
+		loginTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ï±ï¿½ 
+		layeredPane.add(loginTextField); // ï¿½Ð³Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 
-		//ºñ¹Ð¹øÈ£
+		//ï¿½ï¿½Ð¹ï¿½È£
 		passwordField = new JPasswordField(15); 
-		passwordField.setBounds(731,529,280,30); //ÆÐ½º¿öµå ÅØ½ºÆ® ÇÊµå À§Ä¡ 
-		passwordField.setOpaque(false);//Åõ¸íÇÏ°ÔÇÏ±â 
+		passwordField.setBounds(731,529,280,30); //ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½Êµï¿½ ï¿½ï¿½Ä¡ 
+		passwordField.setOpaque(false);//ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Ï±ï¿½ 
 		passwordField.setForeground(Color.green);
-		passwordField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//Åõ¸íÇÏ°ÔÇÏ±â 
-		layeredPane.add(passwordField);//ÆÐ³Î¿¡ ³Ö±â
+		passwordField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Ï±ï¿½ 
+		layeredPane.add(passwordField);//ï¿½Ð³Î¿ï¿½ ï¿½Ö±ï¿½
 
-		//¹öÆ°Ãß°¡
-		lgbt = new JButton(new ImageIcon("image/btLogin_hud.png"));// ¹öÆ°¿¡ ÀÌ¹ÌÁö Ãß°¡ 
+		//ï¿½ï¿½Æ°ï¿½ß°ï¿½
+		lgbt = new JButton(new ImageIcon("image/btLogin_hud.png"));// ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ 
 		lgbt.setBounds(755,589,104,48);
-		lgbt.setBorderPainted(false);//Åõ¸íÇÏ°ÔÇÏ±â
-		lgbt.setFocusPainted(false);//Åõ¸íÇÏ°ÔÇÏ±â
-		lgbt.setContentAreaFilled(false);//Åõ¸íÇÏ°ÔÇÏ±â
-		layeredPane.add(lgbt);//ÆÐ³Î¿¡ ³Ö±â 
+		lgbt.setBorderPainted(false);//ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Ï±ï¿½
+		lgbt.setFocusPainted(false);//ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Ï±ï¿½
+		lgbt.setContentAreaFilled(false);//ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Ï±ï¿½
+		layeredPane.add(lgbt);//ï¿½Ð³Î¿ï¿½ ï¿½Ö±ï¿½ 
 
-		//È¸¿ø°¡ÀÔ ¹öÆ° Ãß°¡¤Ó
+		//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ß°ï¿½ï¿½ï¿½
 		sgbt = new JButton(new ImageIcon("image/signup_icon.jpg"));
 		sgbt.setBounds(735,689,184,35);
 		sgbt.setBorderPainted(false);
@@ -98,30 +98,28 @@ public class Login extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		String id = loginTextField.getText();
+		id = loginTextField.getText();
 		char[] pass = passwordField.getPassword();
-		String pw = new String(pass);
+		pw = new String(pass);
+			
+		System.out.println(id+" "+pw);
 		Client.setID(id);
-		Client.setPW(pw);		
 
+		Client.setPW(pw);
 		if(e.getSource()==lgbt) {
 			if(id.equals("")|| pw.equals("")) {
 				//send message
 				JOptionPane.showMessageDialog(null, "text field space!!");
 			}
 			else {
-				flag=true;
-				System.out.println("·Î±×ÀÎ ¹öÆ° ´©¸§");
+				
+				flag=false;
+				System.out.println("asdasdasdas");
+				
 			}
 		}
 		else {
 			new Signup();
 		}
-	}
-	
-	public String set() {
-		// TODO Auto-generated method stub
-		idpw=id+","+pw;
-		return idpw;
 	}
 }

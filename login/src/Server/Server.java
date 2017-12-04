@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.StringTokenizer;
+
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import controller.loadService;
 import controller.loginService;
@@ -42,7 +46,7 @@ public class Server {
 		private BufferedReader in;
 		private PrintWriter out;
 		String p =",";
-		boolean flag = false;
+		private boolean flag=false;
 		private String[] info = new String[2];
 
 		public Handler(Socket socket) {
@@ -61,31 +65,41 @@ public class Server {
 					if(temp.startsWith("SUCCESS"))
 						break;
 				}
-//				while(Login.flag){
-//					System.out.println("로그인 버튼 안눌렀으니 아직 리퀘스트 보내면 안됨");
-//				}
 
 				out.println("REQUEST");
 				System.out.println("리퀘스트 보냄");
+
 				while(true){
 
 					String next = in.readLine();
 					System.out.println(next);
+					ArrayList<String> tmp =new ArrayList<String>();
+					StringTokenizer tokens = new StringTokenizer(next," ");
 
-					switch(next){
-					
+					while(tokens.hasMoreElements()){
+						tmp.add(tokens.nextToken());
+					}
+
+					System.out.println(tmp.get(0));
+					switch(tmp.get(0)){
+
 					case "IDANDPW":
+
 						System.out.println("아이디 잘받음");
-						String IDPW = next.substring(7);
+						String IDPW = next.substring(8);
 						info = IDPW.split(p);
+						System.out.println("ID : "+info[0]);
+						System.out.println("PW : "+info[1]);
 						if(info[0]!=null&&info[1]!=null){
 							flag = loginService.loginTest(info[0], info[1]);
 						}
 						out.println("ACCESSED"+flag);
 						System.out.println("확인하고 결과보냄");
-
+						break;
 					case "MODIFY":
 						break;
+					default :
+						System.out.println("뭔가 잘못됨 ㅇㅅㅇ");
 					}
 
 

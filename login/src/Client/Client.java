@@ -1,91 +1,65 @@
 package Client;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import view.Login;
-import view.Main;
 
 public class Client {
+	static BufferedReader in = null;// ì„œë²„ì—ì„œ ë³´ë‚´ì£¼ê¸°
+	static PrintWriter out = null; // ì„œë²„ë¡œ ë°ì´íƒ€ ë³´ë‚´ì£¼ëŠ”
+	// ì†Œì¼“ì„ ë‘ê°œ ë§Œë“¤êº¼ì˜ˆìš”
+	public static Socket Socket = null; // ë°ì´íƒ€ ë³´ë‚´ê³  ë°›ì„ë•Œ ì†Œì¼“
 
-	BufferedReader in;
-	PrintWriter out;   
-	private static String ID="11";
-	private static String PW="11";
-	JFrame frame =new JFrame("IP Address");
+	static int port=1234;
+	public static String id;
+	public static String pw;
+	JFrame frame = new JFrame("IP Address");
 
 	public Client() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public static void setID(String id){
-		ID = id;
-	}
-
-	public static void setPW(String pw){
-		PW = pw;
+		try {
+			Socket=new Socket("127.0.0.1", port);
+	         out = new PrintWriter(Socket.getOutputStream(), true);
+	         in = new BufferedReader(new InputStreamReader(Socket.getInputStream()));   
+	      } catch (UnknownHostException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } //data ë³´ë‚´ê³  ë°›ì„ ì†Œì¼“ì„ ë§Œë“¬
 	}
 
 	private String getServerAddress() {
 
-		return JOptionPane.showInputDialog(frame,"Enter IP Address of the Server:","Welcome to the Chatter",JOptionPane.QUESTION_MESSAGE);
+		return JOptionPane.showInputDialog(frame, "Enter IP Address of the Server:", "Welcome to the Chatter",
+				JOptionPane.QUESTION_MESSAGE);
 
 	}
-
-	public void run() throws IOException{
-
-		String serverAddress = getServerAddress();
-		Socket socket = new Socket(serverAddress, 1234);
-		in= new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		out = new PrintWriter(socket.getOutputStream(),true);
-		String idpw= new String();
-
-		while(true){
-
-			String line = in.readLine();
-			Login login = null;
-
-			if(line.startsWith("START")){
-
-				out.println("SUCCESS");
-				login=new Login();
-				System.out.println("·Î±×ÀÎÈ­¸é¿­±â ¼º°ø");
-				System.out.println("È­¸é ¿­¾úÀ»¶§ flag"+Login.flag);
-
-			}
-			else if((line.startsWith("REQUEST"))&&(Login.flag==0)){
-				System.out.println("¸®Äù½ºÆ®¹ŞÀ½");
-				System.out.println("¾ÆÀÌµğ ¼¼ÆÃ");
-				
-				out.println("IDANDPW qeqeqe,qeqeq");
-				System.out.println("¾ÆÀÌµğ º¸³»±â ¿Ï·á");
-			}
-
-			else if(line.startsWith("ACCESSED")){
-				System.out.println("°á°úµµÂø");
-				String temp = line.substring(8);
-				System.out.println("°á°ú´Â "+temp);
-
-				if(temp.equals("true")){
-					JOptionPane.showMessageDialog(null, "µÆ´Ù ¤µ¤²");
-					new Main(ID);
-				}
-				else
-					System.out.println("¤µ¤²");
-			}
-		}
+	
+	public static String data(String S) throws IOException {
+		out = new PrintWriter(Socket.getOutputStream(), true);
+		out.println(S);
+		in = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
+		S = in.readLine();
+		return S;
 	}
+	
+	public static void main(String[] args) throws Exception {
 
-public static void main(String[] args) throws Exception	{
-
-	Client client = new Client();
-	client.	run();
-}
+		Client client = new Client();
+		
+		Login login= new Login();
+		login.setVisible(true);
+	}
 
 }

@@ -27,7 +27,7 @@ public class checkService {
 			Class.forName(driverName);
 			con=DriverManager.getConnection(dbURL,"root","12345");
 			System.out.println("Driver connection success!!");
-			sql="select ID from info where id=?";
+			sql="select count(ID) from info where id=?";
 			pstmt = con.prepareStatement(sql);
 
 
@@ -36,11 +36,14 @@ public class checkService {
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {
-				getPass = rs.getString("ID");
+				getPass = rs.getString("count(ID)");
 				
-				if(getPass.equals(id)) {
+				if(getPass.equals("1")) {
 					flag=true;
+					return flag;
 				}
+				else
+					return flag;
 			}
 
 			rs.close();

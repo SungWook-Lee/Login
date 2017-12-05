@@ -1,10 +1,13 @@
 package controller;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-public class signupService {
-
-	public static boolean signUp(String id, String pw, String name,int age,String gender,float height, float weight,float goal ){
+public class modifyService {
+	
+	public static boolean modify(String id, String pw, String name,int age,String gender,float height, float weight,float goal ){
 
 		int flag = 0;
 		boolean str=false;
@@ -26,7 +29,7 @@ public class signupService {
 
 			System.out.println("Driver connection success!!");
 
-			sql="insert into info values (?,?,?,?,?,?,?,?)"; 
+			sql="update info set ID=?, PW=?, Name=?, Age=?, Gender=?, Height=?, Weight=?, Goal=? where ID=?"; 
 
 			pstmt = con.prepareStatement(sql);
 
@@ -38,6 +41,7 @@ public class signupService {
 			pstmt.setString(6, in_height);
 			pstmt.setString(7, in_weight);
 			pstmt.setString(8, in_goal);
+			pstmt.setString(9, id);
 
 			flag=pstmt.executeUpdate();
 
@@ -70,4 +74,5 @@ public class signupService {
 		}
 		return str;
 	}
+
 }

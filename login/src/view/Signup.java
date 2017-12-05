@@ -10,11 +10,12 @@ import java.util.Enumeration;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import Client.Client;
 import controller.checkService;
 import controller.signupService;
 
 
-public class Signup extends JFrame  implements ActionListener{
+public class Signup extends JFrame{
 
 
 	BufferedImage img =null;
@@ -31,6 +32,7 @@ public class Signup extends JFrame  implements ActionListener{
 	JButton Nbt;
 	JButton checkDuplicate;
 	ButtonGroup genderButton = new ButtonGroup();
+	String s;
 
 
 	public Signup() {
@@ -94,7 +96,7 @@ public class Signup extends JFrame  implements ActionListener{
 		rdbt1=new JRadioButton("F");
 		rdbt2= new JRadioButton("M");
 		//버튼 그룹화 
-		
+
 		genderButton.add(rdbt1);
 		genderButton.add(rdbt2);
 		rdbt1.setBounds(100, 350, 31, 31);
@@ -140,125 +142,132 @@ public class Signup extends JFrame  implements ActionListener{
 		Nbt.setFocusPainted(false);//투명하게하기
 		Nbt.setContentAreaFilled(false);//투명하게하기
 		layeredPane.add(Nbt);//패널에 넣기 
-		
+
 		//중복확인
 		checkDuplicate = new JButton("중복확인");
 		checkDuplicate.setBounds(400,100,90,30);
 		layeredPane.add(checkDuplicate);
-		
 
-		Nbt.addActionListener(this);
-		Ybt.addActionListener(this);
-		checkDuplicate.addActionListener(this);
 		layeredPane.add(panel);
 		add(layeredPane);
 		setVisible(true);
+
+		Nbt.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+			}
+
+		});
+
+		Ybt.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String id = IDTextField.getText();
+				String temp_age = AgeTextField.getText();
+				int age = Integer.parseInt(temp_age);
+
+				String name = NameTextField.getText();
+
+				String temp_height= HeightTextField.getText();
+				float height=Float.parseFloat(temp_height);
+
+				String temp_weight= WeightTextField.getText();
+				float weight = Float.parseFloat(temp_weight);
+
+				String temp_goal = GoalTextField.getText();
+				float goal = Float.parseFloat(temp_goal);
+
+				char[] pass = passwordField.getPassword();
+				String pw = new String(pass);
+
+				char[] passconfirm = passwordConfirmField.getPassword();
+				String pwconf=new String(passconfirm);
+
+				Enumeration<AbstractButton> enums= genderButton.getElements();
+				String gender=null;
+
+				while(enums.hasMoreElements()){
+					AbstractButton ab = enums.nextElement();
+					JRadioButton jb =(JRadioButton)ab;
+
+					if(jb.isSelected())
+						gender=jb.getText().trim();
+				}
+
+				if(id.equals("")){
+					JOptionPane.showMessageDialog(null, "ID field EMPTY!!");
+				}
+				else if(temp_age.equals("")){
+					JOptionPane.showMessageDialog(null, "AGE field EMPTY!!");
+				}
+				else if(name.equals("")){
+					JOptionPane.showMessageDialog(null, "NAME field EMPTY!!");
+				}
+				else if(temp_height.equals("")){
+					JOptionPane.showMessageDialog(null, "HEIGHT field EMPTY!!");
+				}
+				else if(temp_weight.equals("")){
+					JOptionPane.showMessageDialog(null, "WEIGHT field EMPTY!!");
+				}
+				else if(temp_goal.equals("")){
+					JOptionPane.showMessageDialog(null, "Goal field EMPTY!!");
+				}
+				else if(pw.equals("")){
+					JOptionPane.showMessageDialog(null, "PASSWORD field EMPTY!!");
+				}
+				else if(pwconf.equals("")){
+					JOptionPane.showMessageDialog(null, "PASSWORDCONFIRM field EMPTY!!");
+				}
+				else if (pw.equals(pwconf)==false){
+					JOptionPane.showMessageDialog(null, "PASSWORDCONFIRM field and PASSWORD field differ!!");
+				}
+				else{
+					try {
+						s="SIGNUP "+id+","+pw+","+name+","+temp_age+","+gender+","+temp_height+","+temp_weight+","+temp_goal;
+						s=Client.data(s);
+
+						String temp = s.substring(8);
+						if(temp.equals("true")){
+							JOptionPane.showMessageDialog(null, "추카포카 회원가입 성공");
+							dispose();
+						}
+						else
+							JOptionPane.showMessageDialog(null, "회원가입 실패라능 ㅇㅅㅇ");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+
+		checkDuplicate.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String id = IDTextField.getText();
+				boolean check = checkService.check(id);
+
+				if(check){
+					JOptionPane.showMessageDialog(null, "중복됨 딴거 쓰셈 ㅋ");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "쓰셈ㅋ");
+				}
+			}
+		});
 
 	}
 	class Mypanel extends JPanel{
 		public void paint(Graphics g) {
 			g.drawImage(img,0,0,null);
 		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-		String id = IDTextField.getText();
-		String temp_age = AgeTextField.getText();
-		int age = Integer.parseInt(temp_age);
-
-		String name = NameTextField.getText();
-
-		String temp_height= HeightTextField.getText();
-		float height=Float.parseFloat(temp_height);
-
-		String temp_weight= WeightTextField.getText();
-		float weight = Float.parseFloat(temp_weight);
-
-		String temp_goal = GoalTextField.getText();
-		float goal = Float.parseFloat(temp_goal);
-
-		char[] pass = passwordField.getPassword();
-		String pw = new String(pass);
-
-		char[] passconfirm = passwordConfirmField.getPassword();
-		String pwconf=new String(passconfirm);
-		
-		Enumeration<AbstractButton> enums= genderButton.getElements();
-		String gender=null;
-		while(enums.hasMoreElements()){
-			AbstractButton ab = enums.nextElement();
-			JRadioButton jb =(JRadioButton)ab;
-			
-			if(jb.isSelected())
-				gender=jb.getText().trim();
-				
-		}
-
-		if(e.getSource()==Ybt) {
-			
-			if(id.equals("")){
-				JOptionPane.showMessageDialog(null, "ID field EMPTY!!");
-			}
-			else if(temp_age.equals("")){
-				JOptionPane.showMessageDialog(null, "AGE field EMPTY!!");
-			}
-			else if(name.equals("")){
-				JOptionPane.showMessageDialog(null, "NAME field EMPTY!!");
-			}
-			else if(temp_height.equals("")){
-				JOptionPane.showMessageDialog(null, "HEIGHT field EMPTY!!");
-			}
-			else if(temp_weight.equals("")){
-				JOptionPane.showMessageDialog(null, "WEIGHT field EMPTY!!");
-			}
-			else if(temp_goal.equals("")){
-				JOptionPane.showMessageDialog(null, "Goal field EMPTY!!");
-			}
-			else if(pw.equals("")){
-				JOptionPane.showMessageDialog(null, "PASSWORD field EMPTY!!");
-			}
-			else if(pwconf.equals("")){
-				JOptionPane.showMessageDialog(null, "PASSWORDCONFIRM field EMPTY!!");
-			}
-			else if (pw.equals(pwconf)==false){
-				JOptionPane.showMessageDialog(null, "PASSWORDCONFIRM field and PASSWORD field differ!!");
-			}
-			else{
-				boolean success=signupService.signUp(id,pw,name,age,gender,height,weight,goal);
-				
-				if(success==true){
-					dispose();
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Some field EMPTY!!");
-				}
-			}
-
-		}
-		else if(e.getSource()==Nbt) {
-			dispose();
-		}
-		
-		else if(e.getSource()==checkDuplicate){
-			
-			boolean check = checkService.check(id);
-		
-			if(check){
-				JOptionPane.showMessageDialog(null, "Already taken ID!!");
-			}
-			else{
-				JOptionPane.showMessageDialog(null, "Available ID!!");
-			}
-		}
-
-	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		new Signup();
 	}
 
 }

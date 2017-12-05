@@ -22,11 +22,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import Client.Client;
 import controller.checkService;
 import controller.signupService;
 import view.Signup.Mypanel;
 
-public class Modify extends JFrame implements ActionListener{
+public class Modify extends JFrame{
 
 	BufferedImage img =null;
 	JTextField IDTextField;
@@ -41,6 +42,7 @@ public class Modify extends JFrame implements ActionListener{
 	JButton Ybt;
 	JButton Nbt;
 	JButton checkDuplicate;
+	String s;
 	ButtonGroup genderButton = new ButtonGroup();
 
 	public Modify(String id,String name, String age, String gender,String height, String weight,String goal) {
@@ -161,9 +163,120 @@ public class Modify extends JFrame implements ActionListener{
 		checkDuplicate.setBounds(400,100,90,30);
 		layeredPane.add(checkDuplicate);
 
+		Nbt.addActionListener(new ActionListener(){
 
-		Nbt.addActionListener(this);
-		Ybt.addActionListener(this);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+			}
+
+		});
+		
+		Ybt.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String id = IDTextField.getText();
+				String temp_age = AgeTextField.getText();
+				int age = Integer.parseInt(temp_age);
+
+				String name = NameTextField.getText();
+
+				String temp_height= HeightTextField.getText();
+				float height=Float.parseFloat(temp_height);
+
+				String temp_weight= WeightTextField.getText();
+				float weight = Float.parseFloat(temp_weight);
+
+				String temp_goal = GoalTextField.getText();
+				float goal = Float.parseFloat(temp_goal);
+
+				char[] pass = passwordField.getPassword();
+				String pw = new String(pass);
+
+				char[] passconfirm = passwordConfirmField.getPassword();
+				String pwconf=new String(passconfirm);
+
+				Enumeration<AbstractButton> enums= genderButton.getElements();
+				String gender=null;
+
+				while(enums.hasMoreElements()){
+					AbstractButton ab = enums.nextElement();
+					JRadioButton jb =(JRadioButton)ab;
+
+					if(jb.isSelected())
+						gender=jb.getText().trim();
+				}
+
+				if(id.equals("")){
+					JOptionPane.showMessageDialog(null, "ID field EMPTY!!");
+				}
+				else if(temp_age.equals("")){
+					JOptionPane.showMessageDialog(null, "AGE field EMPTY!!");
+				}
+				else if(name.equals("")){
+					JOptionPane.showMessageDialog(null, "NAME field EMPTY!!");
+				}
+				else if(temp_height.equals("")){
+					JOptionPane.showMessageDialog(null, "HEIGHT field EMPTY!!");
+				}
+				else if(temp_weight.equals("")){
+					JOptionPane.showMessageDialog(null, "WEIGHT field EMPTY!!");
+				}
+				else if(temp_goal.equals("")){
+					JOptionPane.showMessageDialog(null, "Goal field EMPTY!!");
+				}
+				else if(pw.equals("")){
+					JOptionPane.showMessageDialog(null, "PASSWORD field EMPTY!!");
+				}
+				else if(pwconf.equals("")){
+					JOptionPane.showMessageDialog(null, "PASSWORDCONFIRM field EMPTY!!");
+				}
+				else if (pw.equals(pwconf)==false){
+					JOptionPane.showMessageDialog(null, "PASSWORDCONFIRM field and PASSWORD field differ!!");
+				}
+				else{
+					try {
+						s="MODIFY "+id+","+pw+","+name+","+temp_age+","+gender+","+temp_height+","+temp_weight+","+temp_goal;
+						s=Client.data(s);
+
+						String temp = s.substring(6);
+						if(temp.equals("true")){
+							JOptionPane.showMessageDialog(null, "정보수정완료ㅋ");
+							dispose();
+						}
+						else
+							JOptionPane.showMessageDialog(null, "정보수정실패 ㅋ");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		
+		checkDuplicate.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String id = IDTextField.getText();
+				boolean check = checkService.check(id);
+
+				if(check){
+					JOptionPane.showMessageDialog(null, "중복됨 딴거 쓰셈 ㅋ");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "쓰셈ㅋ");
+				}
+			}
+		});
+		
+		
+
+
 		layeredPane.add(panel);
 		add(layeredPane);
 		setVisible(true);
@@ -173,109 +286,6 @@ public class Modify extends JFrame implements ActionListener{
 		public void paint(Graphics g) {
 			g.drawImage(img,0,0,null);
 		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
-		String id = IDTextField.getText();
-		System.out.println(id);
-		String temp_age = AgeTextField.getText();
-		int age = Integer.parseInt(temp_age);
-
-		String name = NameTextField.getText();
-
-		String temp_height= HeightTextField.getText();
-		float height=Float.parseFloat(temp_height);
-
-		String temp_weight= WeightTextField.getText();
-		float weight = Float.parseFloat(temp_weight);
-
-		String temp_goal = GoalTextField.getText();
-		float goal = Float.parseFloat(temp_goal);
-
-		char[] pass = passwordField.getPassword();
-		String pw = new String(pass);
-
-		char[] passconfirm = passwordConfirmField.getPassword();
-		String pwconf=new String(passconfirm);
-
-		Enumeration<AbstractButton> enums= genderButton.getElements();
-		String gender=null;
-		while(enums.hasMoreElements()){
-			AbstractButton ab = enums.nextElement();
-			JRadioButton jb =(JRadioButton)ab;
-
-			if(jb.isSelected())
-				gender=jb.getText().trim();
-
-		}
-
-		if(e.getSource()==Ybt) {
-
-			if(id.equals("")){
-				JOptionPane.showMessageDialog(null, "ID field EMPTY!!");
-			}
-			else if(temp_age.equals("")){
-				JOptionPane.showMessageDialog(null, "AGE field EMPTY!!");
-			}
-			else if(name.equals("")){
-				JOptionPane.showMessageDialog(null, "NAME field EMPTY!!");
-			}
-			else if(temp_height.equals("")){
-				JOptionPane.showMessageDialog(null, "HEIGHT field EMPTY!!");
-			}
-			else if(temp_weight.equals("")){
-				JOptionPane.showMessageDialog(null, "WEIGHT field EMPTY!!");
-			}
-			else if(temp_goal.equals("")){
-				JOptionPane.showMessageDialog(null, "Goal field EMPTY!!");
-			}
-			else if(pw.equals("")){
-				JOptionPane.showMessageDialog(null, "PASSWORD field EMPTY!!");
-			}
-			else if(pwconf.equals("")){
-				JOptionPane.showMessageDialog(null, "PASSWORDCONFIRM field EMPTY!!");
-			}
-			else if (pw.equals(pwconf)==false){
-				JOptionPane.showMessageDialog(null, "PASSWORDCONFIRM field and PASSWORD field differ!!");
-			}
-			else{
-				boolean success=signupService.signUp(id,pw,name,age,gender,height,weight,goal);
-
-				if(success==true){
-					dispose();
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Some field EMPTY!!");
-				}
-			}
-
-		}
-		else if(e.getSource()==Nbt) {
-			dispose();
-		}
-
-		else if(e.getSource()==checkDuplicate){
-
-			boolean check = checkService.check(id);
-
-			if(check==true){
-				JOptionPane.showMessageDialog(null, "Already taken ID!!");
-			}
-			else{
-				JOptionPane.showMessageDialog(null, "Available ID!!");
-			}
-		}
-
-	}
-
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		new Modify("tester","이성욱","23","M","180.3","70.0","80.0");
 	}
 
 }

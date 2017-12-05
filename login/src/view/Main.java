@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import controller.loadService;
 
-public class Main extends JFrame implements ActionListener{
+public class Main extends JFrame{
 	
 	JTabbedPane jtp = null;
 	JPanel jp = null;
@@ -66,8 +66,28 @@ public class Main extends JFrame implements ActionListener{
 		this.setLayout(null);
 		jp.setLayout(null);
 
-		modify.addActionListener(this);
-		logout.addActionListener(this);
+		logout.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+				new Login();
+			}
+		});
+		
+		modify.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String id = ID;
+				String[] info = new String[7];
+				info= loadService.Load(id);
+				new Modify(info[0],info[1],info[2],info[3],info[4],info[5],info[6]);	
+			}
+			
+		});
 		
 		this.getContentPane().add(jp);
 		this.getContentPane().add(jtp);
@@ -97,7 +117,6 @@ public class Main extends JFrame implements ActionListener{
 		}
 	}
 
-	
 	class food_pan extends JPanel{
 		
 		public food_pan(){
@@ -120,25 +139,6 @@ public class Main extends JFrame implements ActionListener{
 		}
 
 	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-		String id = this.getID();
-		String[] info = new String[7];
-		info= loadService.Load(id);
-		
-		if(e.getSource()==modify)
-		{
-			new Modify(info[0],info[1],info[2],info[3],info[4],info[5],info[6]);	
-		}
-		else{
-			new Login();
-			dispose();
-		}
-		
-	}
-
 
 }
 

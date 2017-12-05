@@ -15,10 +15,9 @@ import javax.swing.JOptionPane;
 import view.Login;
 
 public class Client {
-	static BufferedReader in = null;// 서버에서 보내주기
-	static PrintWriter out = null; // 서버로 데이타 보내주는
-	// 소켓을 두개 만들꺼예요
-	public static Socket Socket = null; // 데이타 보내고 받을때 소켓
+	static BufferedReader in = null;
+	static PrintWriter out = null; 
+	public static Socket Socket = null; 
 
 	static int port=1234;
 	public static String id;
@@ -36,16 +35,9 @@ public class Client {
 	      } catch (IOException e) {
 	         // TODO Auto-generated catch block
 	         e.printStackTrace();
-	      } //data 보내고 받을 소켓을 만듬
+	      } 
 	}
 
-	private String getServerAddress() {
-
-		return JOptionPane.showInputDialog(frame, "Enter IP Address of the Server:", "Welcome to the Chatter",
-				JOptionPane.QUESTION_MESSAGE);
-
-	}
-	
 	public static String data(String S) throws IOException {
 		out = new PrintWriter(Socket.getOutputStream(), true);
 		out.println(S);
